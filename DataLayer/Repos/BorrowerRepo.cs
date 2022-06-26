@@ -13,7 +13,7 @@ namespace DataLayer.Repos
 
     public class BorrowerRepo : BaseRepo<Borrower>, IBorrowerRepo
     {
-        public BorrowerRepo(LibraryContext context, bool automaticSave) : base(context, automaticSave)
+        public BorrowerRepo(LibraryContext context) : base(context)
         {
         }
     }

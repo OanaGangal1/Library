@@ -13,7 +13,7 @@ namespace DataLayer.Repos
 
     public class BookRepo : BaseRepo<Book>, IBookRepo
     {
-        public BookRepo(LibraryContext context, bool automaticSave) : base(context, automaticSave)
+        public BookRepo(LibraryContext context) : base(context)
         {
         }
     }
