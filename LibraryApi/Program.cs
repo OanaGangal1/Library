@@ -1,7 +1,8 @@
 using DataLayer;
 using DataLayer.Repos;
-using Mapper.Interfaces;
-using Mapper.Mappers;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Services.Interfaces;
 using Services.Services;
 
@@ -14,28 +15,19 @@ static void AddRepos(IServiceCollection services)
 
 static void AddServices(IServiceCollection services)
 {
-    services.AddScoped<IUseDbService, UseDbService>();
     services.AddScoped<IBookService, BookService>();
     services.AddScoped<IBorrowerService, BorrowerService>();
     services.AddScoped<IBorrowedBookService, BorrowedBookService>();
 }
 
-static void AddMappers(IServiceCollection services)
-{
-    services.AddScoped<IBookMapper, BookMapper>();
-    services.AddScoped<IBorrowerMapper, BorrowerMapper>();
-    services.AddScoped<IBorrowedBookMapper, BorrowedBookMapper>();
-}
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddAutoMapper(typeof(Program));
-
+builder.Services.AddScoped<LibraryContext>();
 AddRepos(builder.Services);
 
 AddServices(builder.Services);
-
-AddMappers(builder.Services);
 
 builder.Services.AddControllers();
 

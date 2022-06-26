@@ -8,6 +8,7 @@ namespace Services.Dtos.Book
 {
     public class BookDto : BaseBookDto
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Isbn { get; set; }
         public decimal RentalPrice { get; set; }

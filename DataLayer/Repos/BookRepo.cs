@@ -7,8 +7,9 @@ using DataLayer.Entities;
 
 namespace DataLayer.Repos
 {
-    public interface IBookRepo
+    public interface IBookRepo : IBaseRepo<Book>
     {
+        int CountByIsbn(string isbn);
     }
 
     public class BookRepo : BaseRepo<Book>, IBookRepo
@@ -16,5 +17,7 @@ namespace DataLayer.Repos
         public BookRepo(LibraryContext context) : base(context)
         {
         }
+
+        public int CountByIsbn(string isbn) => dbSet.Count(x => x.Isbn == isbn);
     }
 }

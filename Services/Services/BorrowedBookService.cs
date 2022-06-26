@@ -1,11 +1,15 @@
 ﻿using DataLayer;
+using Services.Dtos.BorrowedBook;
 using Services.Interfaces;
 
 namespace Services.Services;
 
-public class BorrowedBookService : UseDbService, IBorrowedBookService
+public class BorrowedBookService : IBorrowedBookService
 {
-    public BorrowedBookService(IUnitOfWork unitOfWork) : base(unitOfWork)
+    private readonly IUnitOfWork _unitOfWork;
+
+    public BorrowedBookService(IUnitOfWork unitOfWork)
     {
+        _unitOfWork = unitOfWork;
     }
 }

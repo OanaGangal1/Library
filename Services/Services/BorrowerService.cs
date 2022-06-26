@@ -3,9 +3,12 @@ using Services.Interfaces;
 
 namespace Services.Services;
 
-public class BorrowerService : UseDbService, IBorrowerService
+public class BorrowerService : IBorrowerService
 {
-    public BorrowerService(IUnitOfWork unitOfWork) : base(unitOfWork)
+    private readonly IUnitOfWork _unitOfWork;
+
+    public BorrowerService(IUnitOfWork unitOfWork)
     {
+        _unitOfWork = unitOfWork;
     }
 }

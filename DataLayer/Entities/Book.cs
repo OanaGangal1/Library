@@ -6,7 +6,7 @@ public class Book : BaseEntity
     public string Name { get; set; }
     public string Isbn { get; set; }
     public decimal RentalPrice { get; set; }
-    public ICollection<BorrowBook> BorrowBooks { get; set; }
+    public ICollection<BorrowBook> BorrowBooks { get; set; } = new HashSet<BorrowBook>();
 
     public Book()
     {
@@ -19,7 +19,7 @@ public class Book : BaseEntity
             [4] = (new Random()).Next(0, 9)
         };
 
-       isbn.ForEach(x => Isbn += x.ToString() + "-");
+       isbn.ForEach(x => Isbn += x + "-");
        Isbn = Isbn.Remove(Isbn.LastIndexOf("-", StringComparison.Ordinal));
     }
 }

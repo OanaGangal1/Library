@@ -7,7 +7,7 @@ using DataLayer.Entities;
 
 namespace DataLayer.Repos
 {
-    public interface IBorrowerRepo
+    public interface IBorrowerRepo : IBaseRepo<Borrower>
     {
     }
 

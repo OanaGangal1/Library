@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataLayer", "DataLayer\Data
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{39143943-00DA-4362-9BF5-35447B45EAA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mapper", "Mapper\Mapper.csproj", "{EFBFF4C3-5938-4EAF-BB5F-0D760031730A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{39143943-00DA-4362-9BF5-35447B45EAA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39143943-00DA-4362-9BF5-35447B45EAA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39143943-00DA-4362-9BF5-35447B45EAA0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EFBFF4C3-5938-4EAF-BB5F-0D760031730A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EFBFF4C3-5938-4EAF-BB5F-0D760031730A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EFBFF4C3-5938-4EAF-BB5F-0D760031730A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EFBFF4C3-5938-4EAF-BB5F-0D760031730A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -12,22 +12,27 @@ namespace DataLayer.Repos
 {
     public interface IBaseRepo<T> where T : BaseEntity
     {
+        T Insert(T record, bool automaticSave = false);
+        T Update(T record, bool automaticSave = false);
+        void Delete(T record, bool automaticSave = false);
+        T GetById(Guid id);
+        IList<T> GetAll(bool includeDeleted = false);
     }
 
     public class BaseRepo<T> : IBaseRepo<T> where T : BaseEntity
     {
         private readonly LibraryContext _context;
-        private readonly DbSet<T> _dbSet;
+        protected readonly DbSet<T> dbSet;
 
         public BaseRepo(LibraryContext context)
         {
             _context = context;
-            _dbSet = _context.Set<T>();
+            dbSet = _context.Set<T>();
         }
 
         public T Insert(T record, bool automaticSave = false)
         {
-            var result = _dbSet.Add(record);
+            var result = dbSet.Add(record);
 
             if(automaticSave)
                 _context.SaveChanges();
@@ -37,7 +42,7 @@ namespace DataLayer.Repos
 
         public T Update(T record, bool automaticSave = false)
         {
-            var result = _dbSet.Update(record);
+            var result = dbSet.Update(record);
 
             if (automaticSave)
                 _context.SaveChanges();
@@ -47,18 +52,18 @@ namespace DataLayer.Repos
 
         public void Delete(T record, bool automaticSave = false)
         {
-            var result = _dbSet.Remove(record);
+            var result = dbSet.Remove(record);
 
             if (automaticSave)
                 _context.SaveChanges();
         }
 
         public T GetById(Guid id) =>
-            _dbSet
+            dbSet
                 .FirstOrDefault(x => x.Id == id);
 
-        public ICollection<T> GetAll(bool includeDeleted = false) =>
-            _dbSet
+        public IList<T> GetAll(bool includeDeleted = false) =>
+            dbSet
                 .Where(x => includeDeleted == (x.DeletedAt != null))
                 .ToList();
     }
