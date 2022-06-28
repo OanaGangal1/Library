@@ -7,7 +7,7 @@ using Services.Interfaces;
 namespace LibraryApi.Controllers
 {
     [Route("api/[controller]")]
-    public class BookController : ControllerBase
+    public class BookController : BaseController
     {
         private readonly IBookService _bookService;
 
@@ -17,7 +17,7 @@ namespace LibraryApi.Controllers
         }
 
         [HttpPost("add")]
-        public BookDto Add(BookDto newBook) => _bookService.Add(newBook);
+        public BookDto Add(AddBookDto newBook) => _bookService.Add(newBook);
 
         [HttpGet("all")]
         public List<BookDto> GetAll() => _bookService.GetAll();

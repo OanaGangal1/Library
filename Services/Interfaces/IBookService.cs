@@ -3,9 +3,9 @@ using Services.Dtos.Book;
 
 namespace Services.Interfaces;
 
-public interface IBookService : IUseDbService
+public interface IBookService
 {
-    BookDto Add(BookDto newBook);
+    BookDto Add(AddBookDto newBook);
     BookDto GetById(Guid id);
     List<BookDto> GetAll(bool includeDeleted = false);
     void Delete(Guid id);

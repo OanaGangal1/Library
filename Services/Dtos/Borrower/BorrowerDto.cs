@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Services.Dtos.Borrower
 {
-    public class BorrowerDto : BaseBorrowerDto
+    public class BorrowerDto : BaseDto
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

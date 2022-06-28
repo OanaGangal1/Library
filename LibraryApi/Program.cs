@@ -1,10 +1,16 @@
 using DataLayer;
 using DataLayer.Repos;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
+using Services.Dtos;
+using Services.Exceptions;
 using Services.Interfaces;
 using Services.Services;
+using System.Collections.Generic;
 
 static void AddRepos(IServiceCollection services)
 {
@@ -23,7 +29,7 @@ static void AddServices(IServiceCollection services)
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddAutoMapper(typeof(BaseDto));
 builder.Services.AddScoped<LibraryContext>();
 AddRepos(builder.Services);
 
@@ -50,5 +56,28 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseExceptionHandler(error =>
+{
+    error.Run(async context =>
+    {
+        var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
+        if (contextFeature != null)
+        {
+            context.Items["Exception"] = contextFeature.Error.Message;
+            context.Items["StackTrace"] = contextFeature.Error.StackTrace;
+
+            context.Response.StatusCode = contextFeature.Error switch
+            {
+                BadRequestException => StatusCodes.Status400BadRequest,
+                AppException => StatusCodes.Status200OK,
+                _ => StatusCodes.Status500InternalServerError
+            };
+
+            context.Response.ContentType = "application/json";
+            await context.Response.WriteAsync(JsonConvert.SerializeObject(new List<string> { contextFeature.Error.Message }));
+        }
+    });
+});
 
 app.Run();

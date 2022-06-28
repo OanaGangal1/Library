@@ -31,7 +31,7 @@ namespace DataLayer
         {
             var folder = Environment.SpecialFolder.LocalApplicationData;
             var path = Environment.GetFolderPath(folder);
-            _dbPath = System.IO.Path.Join("library.db");
+            _dbPath = System.IO.Path.Join(path, "library.db");
         }
     }
 }

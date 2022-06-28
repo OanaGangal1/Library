@@ -3,7 +3,7 @@
 namespace LibraryApi.Controllers
 {
     [Route("api/[controller]")]
-    public class BorrowBookController : ControllerBase
+    public class BorrowBookController : BaseController
     {
     }
 }

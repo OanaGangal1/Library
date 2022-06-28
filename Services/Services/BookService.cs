@@ -2,7 +2,9 @@
 using DataLayer;
 using DataLayer.Entities;
 using Services.Dtos.Book;
+using Services.Exceptions;
 using Services.Interfaces;
+using Services.Utilities;
 
 namespace Services.Services;
 
@@ -17,9 +19,15 @@ public class BookService : IBookService
         _mapper = mapper;
     }
 
-    public BookDto Add(BookDto newBook)
+    public BookDto Add(AddBookDto newBook)
     {
-        var book = _unitOfWork.Books.Insert(_mapper.Map<Book>(newBook), true);
+        var book = _unitOfWork.Books.GetByIsbn(newBook.Isbn);
+        var _newBook = _mapper.Map<Book>(newBook);
+        
+        if (book != null && book != _newBook)
+                throw new BadRequestException(ErrorMessages.SameIsbnButDifferent);
+        
+        book = _unitOfWork.Books.Insert(_newBook, true);
         return _mapper.Map<BookDto>(book);
     }
 

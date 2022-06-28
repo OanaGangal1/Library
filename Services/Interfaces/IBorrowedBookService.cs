@@ -1,6 +1,6 @@
 ﻿namespace Services.Interfaces;
 
-public interface IBorrowedBookService: IUseDbService
+public interface IBorrowedBookService
 {
 
 }
