@@ -21,11 +21,20 @@ public class BookService : IBookService
 
     public BookDto Add(AddBookDto newBook)
     {
-        var book = _unitOfWork.Books.GetByIsbn(newBook.Isbn);
+        var book = _unitOfWork.Books.GetByName(newBook.Name);
         var _newBook = _mapper.Map<Book>(newBook);
-        
-        if (book != null && book != _newBook)
+
+        if (book != null)
+        {
+            if (book != _newBook)
+                throw new BadRequestException(ErrorMessages.SameNameButDifferent);
+        }
+        else
+        {
+            book = _unitOfWork.Books.GetByIsbn(newBook.Isbn);
+            if (book != null && book != _newBook)
                 throw new BadRequestException(ErrorMessages.SameIsbnButDifferent);
+        }
         
         book = _unitOfWork.Books.Insert(_newBook, true);
         return _mapper.Map<BookDto>(book);

@@ -11,6 +11,7 @@ using Services.Exceptions;
 using Services.Interfaces;
 using Services.Services;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 static void AddRepos(IServiceCollection services)
 {
@@ -24,6 +25,14 @@ static void AddServices(IServiceCollection services)
     services.AddScoped<IBookService, BookService>();
     services.AddScoped<IBorrowerService, BorrowerService>();
     services.AddScoped<IBorrowedBookService, BorrowedBookService>();
+}
+
+static void MigrateDb(IServiceCollection services)
+{
+    using var serviceProvider = services.BuildServiceProvider();
+    using var scope = serviceProvider.CreateScope();
+    var dbContext = scope.ServiceProvider.GetService<LibraryContext>();
+    dbContext?.Database.Migrate();
 }
 
 var builder = WebApplication.CreateBuilder(args);
@@ -79,5 +88,7 @@ app.UseExceptionHandler(error =>
         }
     });
 });
+
+MigrateDb(builder.Services);
 
 app.Run();

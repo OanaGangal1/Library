@@ -23,9 +23,9 @@ namespace LibraryApi.Controllers
         public List<BookDto> GetAll() => _bookService.GetAll();
 
         [HttpGet("{id}")]
-        public BookDto GetById(Guid id) => _bookService.GetById(id);
+        public BookDto GetById(Guid id) => _bookService.GetById(id);           
 
-        [HttpGet("examplaries/{isbn}")]
+        [HttpGet("noOfBooks/{isbn}")]
         public int CountByIsbn(string isbn) => _bookService.CountByIsbn(isbn);
     }
 }
