@@ -13,5 +13,10 @@ namespace DataLayer.Entities
         public Guid BookId { get; set; }
         public Book Book { get; set; }
         public DateTime BorrowedAt { get; set; }
+
+        public BorrowBook(DateTime? borrowedAt = null)
+        {
+            BorrowedAt = borrowedAt ?? DateTime.UtcNow;
+        }
     }
 }

@@ -9,6 +9,7 @@ namespace DataLayer.Repos
 {
     public interface IBorrowerRepo : IBaseRepo<Borrower>
     {
+        Borrower GetByIdentityNum(string identityNum);
     }
 
     public class BorrowerRepo : BaseRepo<Borrower>, IBorrowerRepo
@@ -16,5 +17,8 @@ namespace DataLayer.Repos
         public BorrowerRepo(LibraryContext context) : base(context)
         {
         }
+
+        public Borrower GetByIdentityNum(string identityNum) =>
+            dbSet.FirstOrDefault(x => x.IdentityNumber == identityNum);
     }
 }

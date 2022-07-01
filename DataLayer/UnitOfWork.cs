@@ -12,6 +12,7 @@ namespace DataLayer
     {
         IBookRepo Books { get; }
         IBorrowerRepo Borrowers { get; }
+        IBorrowBookRepo BorrowBooks { get; }
     }
 
     public class UnitOfWork : IUnitOfWork
@@ -19,12 +20,17 @@ namespace DataLayer
         private readonly LibraryContext _context;
         public IBookRepo Books { get; }
         public IBorrowerRepo Borrowers { get; }
+        public IBorrowBookRepo BorrowBooks { get; }
 
-        public UnitOfWork(IBookRepo books, IBorrowerRepo borrowers, LibraryContext context)
+        public UnitOfWork(IBookRepo books, 
+            IBorrowerRepo borrowers, 
+            IBorrowBookRepo borrowBookRepo,
+            LibraryContext context)
         {
             _context = context;
             Books = books;
             Borrowers = borrowers;
+            BorrowBooks = borrowBookRepo;
         }
 
         public bool SaveChanges() => (_context.SaveChanges() > 0);
