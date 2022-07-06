@@ -12,11 +12,15 @@ public class BorrowedBookService : IBorrowedBookService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly IChargeService _chargeService;
 
-    public BorrowedBookService(IUnitOfWork unitOfWork, IMapper mapper)
+    public BorrowedBookService(IUnitOfWork unitOfWork, 
+                               IMapper mapper,
+                               IChargeService chargeService)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _chargeService = chargeService;
     }
 
     public BorrowedBookDto Borrow(BorrowBookDto borrowBookDto)
@@ -33,18 +37,16 @@ public class BorrowedBookService : IBorrowedBookService
 
         return _mapper.Map<BorrowedBookDto>(borrow);
     }
-
     
-
-    public ReturnBookDto Return(BorrowBookDto borrowBookDto)
+    public decimal Return(BorrowBookDto borrowBookDto)
     {
         var borrowedBook =
             _unitOfWork.BorrowBooks.GetByBorrowerAndBook(borrowBookDto.ReaderIdentityNum, borrowBookDto.BookName);
+
         if (borrowedBook == null)
             throw new NotFoundException(ErrorMessages.BorrowBookNotFound);
 
-        // if BorrowedAt > 2 weeks => charge
-        return null;
+        return _chargeService.Charge(borrowedBook);
     }
     
     private void CheckBorrowerAndBook(BorrowBookDto borrowBookDto, out Borrower borrower, out Book book)
@@ -57,5 +59,4 @@ public class BorrowedBookService : IBorrowedBookService
         if (book == null)
             throw new BadRequestException(ErrorMessages.BookWithNameNotFound);
     }
-
 }

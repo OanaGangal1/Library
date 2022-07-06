@@ -12,11 +12,13 @@ using Services.Interfaces;
 using Services.Services;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Services.Utilities;
 
 static void AddRepos(IServiceCollection services)
 {
     services.AddScoped<IBookRepo, BookRepo>();
     services.AddScoped<IBorrowerRepo, BorrowerRepo>();
+    services.AddScoped<IBorrowBookRepo, BorrowBookRepo>();
     services.AddScoped<IUnitOfWork, UnitOfWork>();
 }
 
@@ -25,6 +27,8 @@ static void AddServices(IServiceCollection services)
     services.AddScoped<IBookService, BookService>();
     services.AddScoped<IBorrowerService, BorrowerService>();
     services.AddScoped<IBorrowedBookService, BorrowedBookService>();
+    services.AddScoped<IChargeService, ChargeService>();
+    services.AddSingleton<IAppConfig, TestAppConfig>();
 }
 
 static void MigrateDb(IServiceCollection services)
@@ -79,6 +83,7 @@ app.UseExceptionHandler(error =>
             context.Response.StatusCode = contextFeature.Error switch
             {
                 BadRequestException => StatusCodes.Status400BadRequest,
+                NotFoundException => StatusCodes.Status404NotFound,
                 AppException => StatusCodes.Status200OK,
                 _ => StatusCodes.Status500InternalServerError
             };

@@ -5,4 +5,5 @@ namespace Services.Interfaces;
 public interface IBorrowedBookService
 {
     BorrowedBookDto Borrow(BorrowBookDto borrowBookDto);
+    decimal Return(BorrowBookDto borrowBookDto);
 }

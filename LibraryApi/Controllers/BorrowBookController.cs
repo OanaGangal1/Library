@@ -17,15 +17,11 @@ namespace LibraryApi.Controllers
         }
 
         [HttpPost("borrow")]
-        public BorrowedBookDto BorrowBook(BorrowBookDto borrowBook)
-        {
-            return _borrowedBookService.Borrow(borrowBook);
-        }
+        public BorrowedBookDto BorrowBook(BorrowBookDto borrowBook) 
+            => _borrowedBookService.Borrow(borrowBook);
 
         [HttpPost("return")]
-        public ReturnBookDto ReturnBook(BorrowBookDto borrowBookDto)
-        {
-
-        }
+        public decimal ReturnBook(BorrowBookDto borrowBookDto) 
+            => _borrowedBookService.Return(borrowBookDto);
     }
 }
