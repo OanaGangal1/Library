@@ -7,6 +7,7 @@ App entities:
 A reader can borrow multiple books and a book can be borrowed by multiple readers.
 
 App functionalities:
+
           Book logic:
             - Add a new book
             - Fetch all existent books
