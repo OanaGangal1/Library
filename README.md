@@ -12,10 +12,12 @@ App functionalities:
             - Fetch all existent books
             - Fetch a book by its unique identifier generated in the app
             - Count number of books by ISBN
+            
           Reader logic:
             - Register a new reader
             - Fetch all existent readers
             - Fetch a reader by its identity number  
+            
           Book - Reader logic:
             - Borrow a book using the reader's identity number and the book's name.
             - Return a book using the reader's identity number and the book's name. There is a free borrow period of time, if that time have passed the reader will
