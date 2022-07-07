@@ -19,18 +19,16 @@ public class BorrowerService : IBorrowerService
         _mapper = mapper;
     }
 
-    public BorrowerDto Add(BorrowerDto borrowerDto)
+    public BorrowerDto Add(AddBorrowerDto addBorrowerDto)
     {
-        var borrower = _unitOfWork.Borrowers.GetByIdentityNum(borrowerDto.IdentityNumber);
+        var borrower = _unitOfWork.Borrowers.GetByIdentityNum(addBorrowerDto.IdentityNumber);
         if (borrower != null)
             throw new BadRequestException(ErrorMessages.ReaderAlreadyRegistered);
 
-        borrower = _mapper.Map<Borrower>(borrowerDto);
+        borrower = _mapper.Map<Borrower>(addBorrowerDto);
         _unitOfWork.Borrowers.Insert(borrower, true);
-
-        borrowerDto.Id = borrower.Id;
-
-        return borrowerDto;
+        
+        return _mapper.Map<BorrowerDto>(borrower);
     }
 
     public BorrowerDto GetByIdentityNum(string identityNum) => 

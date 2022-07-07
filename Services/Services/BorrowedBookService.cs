@@ -29,7 +29,7 @@ public class BorrowedBookService : IBorrowedBookService
             _unitOfWork.BorrowBooks.GetByBorrowerAndBook(borrowBookDto.ReaderIdentityNum, borrowBookDto.BookName);
 
         if (borrowedBook != null)
-            throw new BadRequestException(ErrorMessages.AlreadeyBorrowed);
+            throw new BadRequestException(ErrorMessages.AlreadyBorrowed);
 
         CheckBorrowerAndBook(borrowBookDto, out Borrower borrower, out Book book);
         

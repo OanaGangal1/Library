@@ -16,6 +16,7 @@ namespace Services.Mapper.Profiles
             CreateMap<Borrower, BorrowerDto>();
             CreateMap<BorrowerDto, Borrower>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
+            CreateMap<AddBorrowerDto, Borrower>();
         }
     }
 }

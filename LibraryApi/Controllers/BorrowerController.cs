@@ -31,7 +31,7 @@ namespace LibraryApi.Controllers
             => _borrowerService.GetAll();
 
         [HttpPost]
-        public BorrowerDto Add(BorrowerDto borrowerDto) 
-            => _borrowerService.Add(borrowerDto);
+        public BorrowerDto Add(AddBorrowerDto addBorrowerDto) 
+            => _borrowerService.Add(addBorrowerDto);
     }
 }
