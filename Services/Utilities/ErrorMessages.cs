@@ -16,5 +16,6 @@ namespace Services.Utilities
         public const string ReaderAlreadyRegistered = "Reader with this identity number is already registered!";
         public const string BookWithNameNotFound = "There is no book registered with this name!";
         public const string BorrowBookNotFound = "No record found with this book and reader";
+        public const string AlreadyBorrowed = "This book was already borrowed by this reader!";
     }
 }

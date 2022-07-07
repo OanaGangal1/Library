@@ -25,8 +25,14 @@ public class BorrowedBookService : IBorrowedBookService
 
     public BorrowedBookDto Borrow(BorrowBookDto borrowBookDto)
     {
-        CheckBorrowerAndBook(borrowBookDto, out Borrower borrower, out Book book);
+        var borrowedBook =
+            _unitOfWork.BorrowBooks.GetByBorrowerAndBook(borrowBookDto.ReaderIdentityNum, borrowBookDto.BookName);
 
+        if (borrowedBook != null)
+            throw new BadRequestException(ErrorMessages.AlreadeyBorrowed);
+
+        CheckBorrowerAndBook(borrowBookDto, out Borrower borrower, out Book book);
+        
         var borrow = new BorrowBook
         {
             Borrower = borrower,
@@ -46,17 +52,18 @@ public class BorrowedBookService : IBorrowedBookService
         if (borrowedBook == null)
             throw new NotFoundException(ErrorMessages.BorrowBookNotFound);
 
+        _unitOfWork.BorrowBooks.Delete(borrowedBook, true);
         return _chargeService.Charge(borrowedBook);
     }
     
     private void CheckBorrowerAndBook(BorrowBookDto borrowBookDto, out Borrower borrower, out Book book)
     {
-        borrower = _unitOfWork.Borrowers.GetByIdentityNum(borrowBookDto.ReaderIdentityNum);
-        if (borrower == null)
-            throw new BadRequestException(ErrorMessages.NoReaderWithIdentityNum);
-
         book = _unitOfWork.Books.GetByName(borrowBookDto.BookName);
         if (book == null)
             throw new BadRequestException(ErrorMessages.BookWithNameNotFound);
+
+        borrower = _unitOfWork.Borrowers.GetByIdentityNum(borrowBookDto.ReaderIdentityNum);
+        if (borrower == null)
+            throw new BadRequestException(ErrorMessages.NoReaderWithIdentityNum);
     }
 }

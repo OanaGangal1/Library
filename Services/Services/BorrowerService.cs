@@ -35,4 +35,7 @@ public class BorrowerService : IBorrowerService
 
     public BorrowerDto GetByIdentityNum(string identityNum) => 
         _mapper.Map<BorrowerDto>(_unitOfWork.Borrowers.GetByIdentityNum(identityNum));
+
+    public List<BorrowerDto> GetAll() => 
+        _mapper.Map<List<BorrowerDto>>(_unitOfWork.Borrowers.GetAll());
 }

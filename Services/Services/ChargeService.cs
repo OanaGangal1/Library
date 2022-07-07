@@ -26,9 +26,9 @@ namespace Services.Services
             if (passedTime <= _appConfig.FreeBorrowTime)
                 return 0;
 
-            var days = passedTime.TotalDays - _appConfig.FreeBorrowTime.TotalDays;
+            var timeUnits = _appConfig.GetTotalTimeUnits(_appConfig.FreeBorrowTime, passedTime);
 
-            return _appConfig.ChargeRate * borrowedBook.Book.RentalPrice * (decimal)days;
+            return _appConfig.ChargeRate * borrowedBook.Book.RentalPrice * (decimal)timeUnits;
         }
     }
 }

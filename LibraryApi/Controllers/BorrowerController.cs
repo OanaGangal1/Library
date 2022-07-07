@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services.Dtos.Borrower;
 using Services.Interfaces;
@@ -6,6 +7,7 @@ using Services.Utilities;
 
 namespace LibraryApi.Controllers
 {
+    [Route("api/[controller]")]
     public class BorrowerController : BaseController
     {
         private readonly IBorrowerService _borrowerService;
@@ -23,5 +25,13 @@ namespace LibraryApi.Controllers
                 throw new BadHttpRequestException(ErrorMessages.NoReaderWithIdentityNum);
             return borrower;
         }
+
+        [HttpGet("all")]
+        public List<BorrowerDto> GetAll() 
+            => _borrowerService.GetAll();
+
+        [HttpPost]
+        public BorrowerDto Add(BorrowerDto borrowerDto) 
+            => _borrowerService.Add(borrowerDto);
     }
 }

@@ -10,5 +10,6 @@ namespace Services.Interfaces
     {
         TimeSpan FreeBorrowTime { get; set; }
         decimal ChargeRate { get; set; }
+        double GetTotalTimeUnits(TimeSpan start, TimeSpan end);
     }
 }

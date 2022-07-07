@@ -11,5 +11,9 @@ namespace Services.Utilities
     {
         public TimeSpan FreeBorrowTime { get; set; } = TimeSpan.FromMinutes(3);
         public decimal ChargeRate { get; set; } = 0.1m;
+        public double GetTotalTimeUnits(TimeSpan start, TimeSpan end)
+        {
+            return (end - start).TotalMinutes;
+        }
     }
 }
