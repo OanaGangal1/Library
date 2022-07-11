@@ -50,4 +50,9 @@ public class Book : BaseEntity
         && this.RentalPrice == book.RentalPrice
         && this.Name == book.Name;
     }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(this.Isbn, this.RentalPrice, this.Name);
+    }
 }

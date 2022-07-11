@@ -3,6 +3,7 @@ using DataLayer.Repos;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
@@ -10,9 +11,8 @@ using Services.Dtos;
 using Services.Exceptions;
 using Services.Interfaces;
 using Services.Services;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using Services.Utilities;
+using System.Collections.Generic;
 
 static void AddRepos(IServiceCollection services)
 {
@@ -29,14 +29,6 @@ static void AddServices(IServiceCollection services)
     services.AddScoped<IBorrowedBookService, BorrowedBookService>();
     services.AddScoped<IChargeService, ChargeService>();
     services.AddSingleton<IAppConfig, TestAppConfig>();
-}
-
-static void MigrateDb(IServiceCollection services)
-{
-    using var serviceProvider = services.BuildServiceProvider();
-    using var scope = serviceProvider.CreateScope();
-    var dbContext = scope.ServiceProvider.GetService<LibraryContext>();
-    dbContext?.Database.Migrate();
 }
 
 var builder = WebApplication.CreateBuilder(args);
@@ -94,6 +86,6 @@ app.UseExceptionHandler(error =>
     });
 });
 
-MigrateDb(builder.Services);
+new LibraryContext().Database.Migrate();
 
 app.Run();

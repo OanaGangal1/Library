@@ -22,9 +22,7 @@ namespace DataLayer.Repos
         }
 
         public int CountByIsbn(string isbn) => dbSet.Count(x => x.Isbn == isbn);
-
         public Book GetByIsbn(string isbn) => dbSet.FirstOrDefault(x => x.Isbn == isbn);
-
         public Book GetByNameAndIsbn(string name, string isbn) => dbSet.FirstOrDefault(x => x.Name == name && x.Isbn == isbn);
         public Book GetByName(string name) => dbSet.FirstOrDefault(x => x.Name == name);
     }
